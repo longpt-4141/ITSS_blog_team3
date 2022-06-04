@@ -1,4 +1,5 @@
 import { useHistory ,useParams } from "react-router-dom";
+import ScrollButton from "./ScrollButton";
 import useFetch from './useFetch'
 const BlogDetail = () => {
 
@@ -16,6 +17,7 @@ const BlogDetail = () => {
     return ( 
 
         <div className="blog-details">
+            <ScrollButton/>
             {isPending && <div>Loading...</div>}
             {error && <div>{error}</div>}
             {blog && (
