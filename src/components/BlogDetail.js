@@ -1,6 +1,7 @@
 import { useHistory ,useParams, Link} from "react-router-dom";
 import {useState, useEffect} from "react"
 import useFetch from './useFetch'
+import ScrollButton from "./ScrollButton";
 const BlogDetail = () => {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
@@ -34,6 +35,7 @@ const BlogDetail = () => {
     return ( 
 
         <div className="blog-details">
+            <ScrollButton/>
             {isPending && <div>Loading...</div>}
             {error && <div>{error}</div>}
             {blog && (

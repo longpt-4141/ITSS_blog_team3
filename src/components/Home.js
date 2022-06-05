@@ -1,5 +1,6 @@
 import useFetch from "./useFetch"
 import BlogList from "./BlogList"
+import ScrollButton from "./ScrollButton"
 
 const Home = () => {
     // let name = 'long';
@@ -9,6 +10,7 @@ const Home = () => {
     
     return ( 
         <div className="home">
+            <ScrollButton/>
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
             {blogs && <BlogList blogs={blogs } title = "All Title" />}
