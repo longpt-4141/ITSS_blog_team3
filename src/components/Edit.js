@@ -1,5 +1,5 @@
-import {useState, useParams} from "react";
-import {useHistory} from "react-router-dom";
+import {useState, useEffect} from "react";
+import {useHistory,useParams} from "react-router-dom";
 const Create = () => {
 
     const [title, setTitle] = useState('');
@@ -8,20 +8,39 @@ const Create = () => {
     const [isPending, setIsPending] = useState(false);
 
     const history = useHistory();
+    const {id} = useParams();
+
+    const getData = () => {
+        fetch('http://localhost:8000/blogs/' + id,{
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((response) => {
+            return response.json()
+        }).then((myJson) => {
+            setTitle(myJson.title)
+            setBody(myJson.body)
+            setAuthor(myJson.author)
+        });
+    }
+    useEffect(() => {
+        getData()
+    },[])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const blog = { title, body, author }
+        const blog = {id, title, body, author }
 
         setIsPending(true)
 
-        fetch('http://localhost:8000/blogs', {
-            method: 'POST' ,
+        fetch('http://localhost:8000/blogs/' + id ,{
+            method: 'PUT' ,
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(blog)
         }).then(() => {
             console.log(blog)
-            console.log('new blog added')
+            console.log('edit ok')
             setIsPending(false)
             history.go(-1);
             // history.push('/blogs/:id');
@@ -29,7 +48,7 @@ const Create = () => {
     }
     return ( 
         <div className="create">
-            <h2>Add a New Blog</h2>
+            <h2>Edit Blog</h2>
             <form onSubmit={handleSubmit}>
                 <label>Blog title:</label>
                 <input 
@@ -40,6 +59,7 @@ const Create = () => {
                 />
                 <label>Blog body:</label>
                 <textarea 
+                className="blog--body"
                 required
                 value = {body}
                 onChange = {(e) => setBody(e.target.value)}
@@ -54,8 +74,8 @@ const Create = () => {
                     <option value="yoshi">yoshi</option>
                     <option value="long">long</option>
                 </select>
-                {!isPending && <button>Add Blog</button>}
-                {isPending && <button disabled>Adding blog...</button>}
+                {!isPending && <button>Edit Blog</button>}
+                {isPending && <button disabled>Editing blog...</button>}
             </form>
         </div>
     );
