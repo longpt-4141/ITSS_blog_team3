@@ -14,8 +14,6 @@ const Home = () => {
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
             {blogs && <BlogList blogs={blogs } title = "All Title" />}
-            {/* {blogs && <BlogTable blogs={blogs}/>} */}
-            {/* <BlogList blogs={blogs.filter((blog) => blog.author === 'mario') } title = "Mario Title"/> */}
         </div>
     );
 }

@@ -1,16 +1,10 @@
-import { useHistory ,useParams, Link} from "react-router-dom";
-import {useState, useEffect} from "react"
-import useFetch from './useFetch'
+import { useHistory ,useParams, Link } from "react-router-dom";
+import useFetch from './useFetch';
 import ScrollButton from "./ScrollButton";
-const BlogDetail = () => {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [body, setBody] = useState('');
+const BlogDetail = ({ title, author, body }) => {
     const {id} = useParams();
     const { data:blog, error, isPending } = useFetch('http://localhost:8000/blogs/' + id);
     const history = useHistory();
-
-    
 
     const handleDelete = () => {
         fetch('http://localhost:8000/blogs/' + blog.id, { 
@@ -45,11 +39,7 @@ const BlogDetail = () => {
                     <div>{blog.body}</div>
                     <Link 
                         to={`/edit/${blog.id}`}
-                        style = {{
-                        color: "#fff",
-                        backgroundColor: '#f1356d',
-                        borderRadius: '8px'
-                        }}
+                        className="is-button"
                     >Edit</Link>
                     <button onClick={handleDelete} >Delete</button>
                 </article>
